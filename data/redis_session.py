@@ -15,7 +15,7 @@ def global_init() -> None:
     global __async_client
     try:
         __client = redis.Redis(host="localhost", port=6379, db=0, )
-        __async_client = StrictRedis(host='127.0.0.1', port=6379, db=0)
+        __async_client = StrictRedis(host='127.0.0.1', port=6379, db=0, decode_responses=True)
     except redis.AuthenticationError:
         print("AuthenticationError")
         sys.exit(1)
@@ -27,6 +27,10 @@ def create_sync_session() -> redis.client.Redis:
 
     if ping is True:
         return __client
+
+
+async def flush_redis() -> None:
+    await __async_client.flushdb()
 
 
 async def create_async_session() -> aredis.client.StrictRedis:

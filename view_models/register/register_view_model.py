@@ -64,5 +64,5 @@ class RegisterViewModel(ViewModelBase):
             self.error = "Your api key is incorrect"
         elif self.architecture.capitalize() not in supported_architecture:
             self.error = "Architecture is not supported."
-        elif await agent_service.get_user_by_address(self.agent_address):
-            self.error = "A user with this email already exists."
+        elif await agent_service.get_agent_by_address(self.agent_address):
+            self.error = "An agent with this address already exists."

@@ -19,7 +19,7 @@
 import datetime
 import time
 import uuid
-from typing import Optional
+from typing import Optional, Dict
 
 
 class Agent:
@@ -82,4 +82,19 @@ class Agent:
     @property
     def last_contacted(self) -> int:
         return self._last_contacted
+
+    @classmethod
+    def from_dict(cls, agent_dict: Dict[str, str]):
+        agent = cls()
+        agent._agent_address = agent_dict.get("_agent_address")
+        agent._chain_identifier = agent_dict.get("_chain_identifier")
+        agent._declared_name = agent_dict.get('_declared_name')
+        agent._architecture = agent_dict.get('_architecture')
+        agent._unique_url = agent_dict.get('_unique_url')
+        agent._unique_token = agent_dict.get('_unique_token')
+        agent._created_date = agent_dict.get('_created_date')
+        agent._last_contacted = agent_dict.get('_last_contacted')
+        agent._status = agent_dict.get('_status')
+        return agent
+
 

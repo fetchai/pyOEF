@@ -2,7 +2,7 @@ import fastapi
 import uvicorn
 
 from data import redis_session
-from views import register
+from views import register, admin
 
 app = fastapi.FastAPI()
 
@@ -18,7 +18,7 @@ def configure_redis():
 
 def configure_routes():
     app.include_router(register.router)
-    # app.include_router(book.router)
+    app.include_router(admin.router)
 
 
 def configure():
