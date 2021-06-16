@@ -40,4 +40,6 @@ async def create_verified_agent(agent_address: str) -> Agent:
     agent._status = "registered"
     agent._last_contacted = int(time.time())
     await client.hmset(agent.agent_address, agent.__dict__)
+    # TODO:// Remove the agent  from loby and move it to agents.
+    await client.smove("lobby", "agents", agent.agent_address)
     return agent
