@@ -38,6 +38,6 @@ async def create_verified_agent(agent_address: str) -> Agent:
     agent_dict = await client.hgetall(agent_address)
     agent = Agent.from_dict(agent_dict)
     agent._status = "registered"
-    agent._last_contacted = time.time()
+    agent._last_contacted = int(time.time())
     await client.hmset(agent.agent_address, agent.__dict__)
     return agent
