@@ -17,6 +17,7 @@
 #
 # ------------------------------------------------------------------------------
 import datetime
+import time
 import uuid
 from typing import Optional
 
@@ -28,9 +29,11 @@ class Agent:
         self._chain_identifier: Optional[str] = None
         self._declared_name: Optional[str] = None
         self._architecture: Optional[str] = None
-        self._unique_token: Optional[str] = f"soef{str(uuid.uuid4())}"
-        self._created_date: datetime.datetime = datetime.datetime.now()
-        self._last_contacted: datetime.datetime = datetime.datetime.now()
+        self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
+        self._unique_token: Optional[str] = f"token_{str(uuid.uuid4())}"
+        self._created_date: int = int(time.time())
+        self._last_contacted: int = int(time.time())
+        self._status: Optional[str] = None
 
     @property
     def agent_address(self) -> str:
@@ -68,15 +71,15 @@ class Agent:
     def unique_token(self) -> str:
         return self._unique_token
 
-    @unique_token.setter
-    def unique_token(self, value: str) -> None:
-        self._unique_token = value
+    @property
+    def unique_url(self) -> None:
+        return self._unique_url
 
     @property
-    def created_date(self) -> datetime.datetime:
+    def created_date(self) -> int:
         return self._created_date
 
     @property
-    def last_contacted(self) -> datetime.datetime:
+    def last_contacted(self) -> int:
         return self._last_contacted
 

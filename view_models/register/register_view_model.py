@@ -4,6 +4,7 @@ from eth_utils.address import is_address, is_checksum_address
 
 from starlette.requests import Request
 
+from services import agent_service
 from view_models.shared.viewmodel import ViewModelBase
 
 _FETCH = "fetch"
@@ -46,6 +47,7 @@ class RegisterViewModel(ViewModelBase):
         self.chain_identifier: Optional[str] = None
         self.declared_name: Optional[str] = None
         self.architecture: Optional[str] = None
+        self.api_key: Optional[str] = None
 
     async def load(self):
         request_data = await self.request.json()
@@ -53,11 +55,14 @@ class RegisterViewModel(ViewModelBase):
         self.agent_address = request_data.get("agent_address")
         self.chain_identifier = request_data.get("chain_identifier")
         self.architecture = request_data.get("architecture")
+        self.api_key = request_data.get('api_key')
         if self.chain_identifier not in supported_chains:
             self.error = "Chain identifier is not supported."
-        elif self.architecture.capitalize() not in supported_architecture:
-            self.error = "Architecture is not supported."
         elif not is_valid_address(self.agent_address, self.chain_identifier):
             self.error = "Agent address is not valid."
-        # elif await user_service.get_user_by_email(self.email):
-        #     self.error = "A user with this email already exists."
+        elif self.api_key != "TwiCIriSl0mLahw17pyqoA":
+            self.error = "Your api key is incorrect"
+        elif self.architecture.capitalize() not in supported_architecture:
+            self.error = "Architecture is not supported."
+        elif await agent_service.get_user_by_address(self.agent_address):
+            self.error = "A user with this email already exists."
