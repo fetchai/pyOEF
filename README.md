@@ -1,5 +1,13 @@
 # pyOEF
 
+You will need to install Redis Server on your machine (or use docker)
+`https://redis.io/download`
+
+extract the zip and then  navigate to the folder from terminal and type:
+`make install`
+
+once the installation finished you can start  the server by typing in  terminal:
+`redis-server`
 
 ### Flush redis:
 
