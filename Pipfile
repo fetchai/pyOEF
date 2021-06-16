@@ -15,6 +15,9 @@ uvicorn = "==0.14.0"
 eth-utils = "*"
 bech32 = "*"
 black = "*"
+aredis = {extras = ["hiredis"], version = "*"}
+aioredis = {extras = ["hiredis"], version = "*"}
+redis = "*"
 
 [dev-packages]
 

@@ -1,6 +1,7 @@
 from starlette.requests import Request
 import fastapi
 
+from services import agent_service
 from view_models.register.register_view_model import RegisterViewModel
 
 router = fastapi.APIRouter()
@@ -14,11 +15,20 @@ async def register(request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    # Create the account
-    # account = await user_service.create_account(vm.name, vm.email, vm.password)
-    #
-    # # Login user
-    # response = fastapi.responses.RedirectResponse(url='/account', status_code=status.HTTP_302_FOUND)
-    # cookie_auth.set_auth(response, account.id)
+    # Create the agent.
+    unique_url, soef_token = await agent_service.create_agent_to_lobby(agent_address=vm.agent_address,
+                                                                       chain_identifier=vm.chain_identifier,
+                                                                       declared_name=vm.declared_name,
+                                                                       architecture=vm.architecture)
+    response = {
+        "status": "registered",
+        "unique_url": unique_url,
+        "soef_token": soef_token
+    }
 
-    return {"Status": "Registered"}
+    return response
+
+
+@router.post('/{unique_token}/acknowledge')
+async def aknowledge(request: Request):
+    vm  = AcknowledgeViewModel(request)
