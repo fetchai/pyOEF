@@ -29,11 +29,13 @@ class Agent:
         self._chain_identifier: Optional[str] = None
         self._declared_name: Optional[str] = None
         self._architecture: Optional[str] = None
+        self._status: Optional[str] = None
+        self._latitude: Optional[float] = None
+        self._longitude: Optional[float] = None
         self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
         self._soef_token: Optional[str] = f"token_{str(uuid.uuid4())}"
         self._created_date: int = int(time.time())
         self._last_contacted: int = int(time.time())
-        self._status: Optional[str] = None
 
     @property
     def agent_address(self) -> str:
@@ -83,6 +85,10 @@ class Agent:
     def last_contacted(self) -> int:
         return self._last_contacted
 
+    @last_contacted.setter
+    def last_contacted(self, value) -> None:
+        self._last_contacted = value
+
     @property
     def status(self) -> str:
         return self._status
@@ -90,6 +96,22 @@ class Agent:
     @status.setter
     def status(self, value) -> None:
         self._status = value
+
+    @property
+    def latitude(self) -> float:
+        return self._latitude
+
+    @latitude.setter
+    def latitude(self, value) -> None:
+        self._latitude = value
+
+    @property
+    def longitude(self) -> float:
+        return self._longitude
+
+    @longitude.setter
+    def longitude(self, value) -> None:
+        self._longitude = value
 
     @classmethod
     def from_dict(cls, agent_dict: Dict[str, str]):
@@ -103,6 +125,9 @@ class Agent:
         agent._created_date = agent_dict.get('_created_date')
         agent._last_contacted = agent_dict.get('_last_contacted')
         agent._status = agent_dict.get('_status')
+        agent._latitude = agent_dict.get('_latitude')
+        agent._longitude = agent_dict.get('_longitude')
+
         return agent
 
 

@@ -5,6 +5,7 @@ from services import agent_service
 from view_models.register.acknowledge_view_model import AcknowledgeViewModel
 from view_models.register.ping_view_model import PingViewModel
 from view_models.register.register_view_model import RegisterViewModel
+from view_models.register.set_position_view_model import SetPositionViewModel
 from view_models.register.unregister_view_model import UnregisterViewModel
 
 router = fastapi.APIRouter()
@@ -54,9 +55,24 @@ async def ping(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    agent = await agent_service.ping(vm.agent_address)
+    response = await agent_service.ping(vm.agent_address)
 
-    return agent.__dict__
+    return response
+
+
+@router.post('{unique_url}/set_position')
+async def set_position(unique_url: str, request: Request):
+    vm = SetPositionViewModel(unique_url, request)
+
+    await vm.load()
+
+    if vm.error:
+        return {'error': vm.error}
+
+    response = await agent_service.set_position(agent_address=vm.agent_address,
+                                                latitude=vm.latitude,
+                                                longitude=vm.longitude)
+    return response
 
 
 @router.get('/{unique_url}/unregister')
