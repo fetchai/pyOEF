@@ -14,12 +14,12 @@ typing-extensions = "==3.10.0.0"
 uvicorn = "==0.14.0"
 eth-utils = "*"
 bech32 = "*"
-black = "*"
 aredis = {extras = ["hiredis"], version = "*"}
-aioredis = {extras = ["hiredis"], version = "*"}
+fastapi-utils = "*"
 redis = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.9"
