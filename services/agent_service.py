@@ -47,6 +47,13 @@ async def create_verified_agent(agent_address: str) -> Agent:
     agent._last_contacted = int(time.time())
     await client.hmset(agent.agent_address, agent.__dict__)
     await client.smove("lobby", "v_agents", agent.agent_address)
-    print(await client.smembers("v_agents"))
-    print(await client.smembers("lobby"))
+    return agent
+
+
+async def ping(agent_address: str) -> Agent:
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent._last_contacted = int(time.time())
+    await client.hmset(agent.agent_address, agent.__dict__)
     return agent

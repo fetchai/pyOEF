@@ -52,3 +52,7 @@ async def ping(unique_url: str, request: Request):
 
     if vm.error:
         return {'error': vm.error}
+
+    agent = await agent_service.ping(vm.agent_address)
+
+    return agent.__dict__
