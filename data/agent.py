@@ -30,7 +30,7 @@ class Agent:
         self._declared_name: Optional[str] = None
         self._architecture: Optional[str] = None
         self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
-        self._unique_token: Optional[str] = f"token_{str(uuid.uuid4())}"
+        self._soef_token: Optional[str] = f"token_{str(uuid.uuid4())}"
         self._created_date: int = int(time.time())
         self._last_contacted: int = int(time.time())
         self._status: Optional[str] = None
@@ -68,11 +68,11 @@ class Agent:
         self._architecture = value
 
     @property
-    def unique_token(self) -> str:
-        return self._unique_token
+    def soef_token(self) -> str:
+        return self._soef_token
 
     @property
-    def unique_url(self) -> None:
+    def unique_url(self) -> str:
         return self._unique_url
 
     @property
@@ -83,6 +83,14 @@ class Agent:
     def last_contacted(self) -> int:
         return self._last_contacted
 
+    @property
+    def status(self) -> str:
+        return self._status
+
+    @status.setter
+    def status(self, value) -> None:
+        self._status = value
+
     @classmethod
     def from_dict(cls, agent_dict: Dict[str, str]):
         agent = cls()
@@ -91,7 +99,7 @@ class Agent:
         agent._declared_name = agent_dict.get('_declared_name')
         agent._architecture = agent_dict.get('_architecture')
         agent._unique_url = agent_dict.get('_unique_url')
-        agent._unique_token = agent_dict.get('_unique_token')
+        agent._soef_token = agent_dict.get('_soef_token')
         agent._created_date = agent_dict.get('_created_date')
         agent._last_contacted = agent_dict.get('_last_contacted')
         agent._status = agent_dict.get('_status')
