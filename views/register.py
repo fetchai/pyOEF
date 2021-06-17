@@ -5,6 +5,7 @@ from services import agent_service
 from view_models.register.acknowledge_view_model import AcknowledgeViewModel
 from view_models.register.ping_view_model import PingViewModel
 from view_models.register.register_view_model import RegisterViewModel
+from view_models.register.unregister_view_model import UnregisterViewModel
 
 router = fastapi.APIRouter()
 
@@ -56,3 +57,16 @@ async def ping(unique_url: str, request: Request):
     agent = await agent_service.ping(vm.agent_address)
 
     return agent.__dict__
+
+
+@router.get('/{unique_url}/unregister')
+async def unregister(unique_url: str, request: Request):
+    vm = UnregisterViewModel(unique_url, request)
+
+    await vm.load()
+
+    if vm.error:
+        return {'error': vm.error}
+
+    response = await agent_service.unregister(vm.agent_address)
+    return response

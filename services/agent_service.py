@@ -1,4 +1,5 @@
 import time
+from typing import Dict
 
 from data import redis_session
 from data.agent import Agent
@@ -6,14 +7,17 @@ from data.agent import Agent
 
 async def get_agent_by_address(agent_address: str) -> bool:
     client = await redis_session.create_async_session()
-    agent = await client.sismember('lobby', agent_address)
+    agent = await client.sismember("lobby", agent_address)
     return agent
 
 
 async def ensure_agent_is_acknowledged(agent_address: str, soef_token: str) -> bool:
     client = await redis_session.create_async_session()
     agent_dict = await client.hgetall(agent_address)
-    return await client.sismember('v_agents', agent_address) and agent_dict.get("_soef_token") == soef_token
+    return (
+        await client.sismember("v_agents", agent_address)
+        and agent_dict.get("_soef_token") == soef_token
+    )
 
 
 async def verify_unique_url(agent_address: str, unique_url: str):
@@ -22,7 +26,9 @@ async def verify_unique_url(agent_address: str, unique_url: str):
     return agent.get("_unique_url") == unique_url
 
 
-async def create_agent_to_lobby(agent_address: str, chain_identifier: str, declared_name: str, architecture: str):
+async def create_agent_to_lobby(
+    agent_address: str, chain_identifier: str, declared_name: str, architecture: str
+):
     agent = Agent()
     agent.agent_address = agent_address
     agent.chain_identifier = chain_identifier
@@ -57,3 +63,11 @@ async def ping(agent_address: str) -> Agent:
     agent._last_contacted = int(time.time())
     await client.hmset(agent.agent_address, agent.__dict__)
     return agent
+
+
+async def unregister(agent_address: str) -> Dict[str, str]:
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    await client.srem(agent_dict.get("_status"), agent_dict.get("_agent_address"))
+    await client.delete(agent_dict.get("_agent_address"))
+    return {"status": "success", "message": "agent deleted."}
