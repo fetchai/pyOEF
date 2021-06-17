@@ -60,7 +60,7 @@ async def ping(unique_url: str, request: Request):
     return response
 
 
-@router.post('{unique_url}/set_position')
+@router.post('/{unique_url}/set_position')
 async def set_position(unique_url: str, request: Request):
     vm = SetPositionViewModel(unique_url, request)
 
@@ -86,3 +86,5 @@ async def unregister(unique_url: str, request: Request):
 
     response = await agent_service.unregister(vm.agent_address)
     return response
+
+

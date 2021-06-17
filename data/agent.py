@@ -16,7 +16,6 @@
 #   limitations under the License.
 #
 # ------------------------------------------------------------------------------
-import datetime
 import time
 import uuid
 from typing import Optional, Dict
@@ -32,6 +31,7 @@ class Agent:
         self._status: Optional[str] = None
         self._latitude: Optional[float] = None
         self._longitude: Optional[float] = None
+        self._genus: Optional[str] = None
         self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
         self._soef_token: Optional[str] = f"token_{str(uuid.uuid4())}"
         self._created_date: int = int(time.time())
@@ -113,6 +113,14 @@ class Agent:
     def longitude(self, value) -> None:
         self._longitude = value
 
+    @property
+    def genus(self) -> str:
+        return self._genus
+
+    @genus.setter
+    def genus(self, value) -> None:
+        self._genus = value
+
     @classmethod
     def from_dict(cls, agent_dict: Dict[str, str]):
         agent = cls()
@@ -127,6 +135,7 @@ class Agent:
         agent._status = agent_dict.get('_status')
         agent._latitude = agent_dict.get('_latitude')
         agent._longitude = agent_dict.get('_longitude')
+        agent._genus = agent_dict.get('_genus')
 
         return agent
 

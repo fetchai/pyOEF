@@ -82,3 +82,13 @@ async def set_position(agent_address: str, latitude: float, longitude: float) ->
     agent.longitude = longitude
     await client.hmset(agent.agent_address, agent.__dict__)
     return {"status": "success", "code": "200", "message": "agent's position has been updated."}
+
+
+async def set_genus(agent_address: str, genus: str):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.genus = genus
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's genus has been updated."}
