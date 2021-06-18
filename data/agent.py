@@ -32,6 +32,7 @@ class Agent:
         self._latitude: Optional[float] = None
         self._longitude: Optional[float] = None
         self._genus: Optional[str] = None
+        self._classification: Optional[str] = None
         self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
         self._soef_token: Optional[str] = f"token_{str(uuid.uuid4())}"
         self._created_date: int = int(time.time())
@@ -121,6 +122,14 @@ class Agent:
     def genus(self, value) -> None:
         self._genus = value
 
+    @property
+    def classification(self) -> str:
+        return self._classification
+
+    @classification.setter
+    def classification(self, value) -> None:
+        self._classification = value
+
     @classmethod
     def from_dict(cls, agent_dict: Dict[str, str]):
         agent = cls()
@@ -136,6 +145,7 @@ class Agent:
         agent._latitude = agent_dict.get('_latitude')
         agent._longitude = agent_dict.get('_longitude')
         agent._genus = agent_dict.get('_genus')
+        agent._classification = agent_dict.get('_classification')
 
         return agent
 

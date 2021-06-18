@@ -18,6 +18,13 @@ class SetPositionViewModel(ViewModelBase):
     async def load(self):
 
         request_data = await self.request.json()
+
+        if not all(key in ["agent_address", "soef_token", "latitude", "longitude"] for key in request_data.keys()):
+            self.error = (
+                f"You need to provide the following parameters: ['agent_address', 'soef_token', 'latitude', 'longitude'] "
+            )
+            return
+
         self.agent_address = request_data.get("agent_address")
         self.soef_token = request_data.get("soef_token")
         self.latitude = request_data.get("latitude")

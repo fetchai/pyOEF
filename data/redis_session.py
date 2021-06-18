@@ -7,7 +7,7 @@ import redis
 from aredis import StrictRedis
 
 __async_client: Optional[aredis.StrictRedis] = None
-__client : Optional[redis.client.Redis] = None
+__client: Optional[redis.client.Redis] = None
 
 
 def global_init() -> None:

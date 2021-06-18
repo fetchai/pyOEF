@@ -22,11 +22,16 @@ async def clean_up():
     verified_agents = [address for address in await client.smembers('agents')]
     agents = lobby + verified_agents
     for address in agents:
+        table = ''
         agent_dict = await client.hgetall(address)
         timeout_time = int(time.time()) - int(agent_dict.get('_last_contacted'))
         if timeout_time > 3600:
             await client.srem(agent_dict.get('_status'), address)
             await client.delete(address)
+            classification_list = agent_dict.get('_classification').split('.')
+            for item in classification_list:
+                table += "." + item
+                await client.sismember(table[1:], address)
 
         else:
             print(timeout_time)

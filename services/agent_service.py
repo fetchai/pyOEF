@@ -92,3 +92,13 @@ async def set_genus(agent_address: str, genus: str):
     agent.genus = genus
     await client.hmset(agent.agent_address, agent.__dict__)
     return {"status": "success", "code": "200", "message": "agent's genus has been updated."}
+
+
+async def set_classification(agent_address: str, classification: str):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.classification = classification
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's classification has been updated."}
