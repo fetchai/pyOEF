@@ -101,6 +101,7 @@ async def set_classification(agent_address: str, classification: str):
     agent.last_contacted = int(time.time())
     agent.classification = classification
     await client.hmset(agent.agent_address, agent.__dict__)
+    print(await client.hgetall(agent_address))
     return {"status": "success", "code": "200", "message": "agent's classification has been updated."}
 
 
