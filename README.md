@@ -50,6 +50,37 @@ or you can do the get request in one  line:
 
 ` GET: http://127.0.0.1:8000/{unique_url}/ping?agent_address=fetch1jwrhvszl5a7hh56dg4fu24usljhx8q2set0tu8&soef_token={soef_token}`
 
+### Set Position:
+`POST: http://127.0.0.1:8000/{unique_url/set_position`
+```buildoutcfg
+params: params: {
+    "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
+    "soef_token": "You_Receive_This_From_Registration",
+    "latitidue": 52.205276,
+    "longitude": 0.119167
+ }
+```
+
+### Set Genus:
+`POST: http://127.0.0.1:8000/{unique_url/set_genus`
+```buildoutcfg
+params: params: {
+    "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
+    "soef_token": "You_Receive_This_From_Registration",
+    "genus": "Service",
+ }
+```
+
+### Set Classification:
+`POST: http://127.0.0.1:8000/{unique_url/set_classification`
+```buildoutcfg
+params: params: {
+    "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
+    "soef_token": "You_Receive_This_From_Registration",
+    "classification": "trvl.hotel",
+ }
+```
+
 ### Unregister:
 
 `GET: http://127.0.0.1:8000/{unique_url}/unregister`

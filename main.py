@@ -1,9 +1,8 @@
 import fastapi
 import uvicorn
-from fastapi_utils.tasks import repeat_every
 
 from data import redis_session
-from views import register, admin
+from views import register, admin, xml_oef, personality_pieces
 
 app = fastapi.FastAPI()
 
@@ -18,6 +17,8 @@ def configure_redis():
 
 
 def configure_routes():
+    app.include_router(xml_oef.router)
+    app.include_router(personality_pieces.router)
     app.include_router(register.router)
     app.include_router(admin.router)
 

@@ -1,5 +1,5 @@
 import time
-from typing import Dict
+from typing import Dict, Any
 
 from data import redis_session
 from data.agent import Agent
@@ -56,13 +56,13 @@ async def create_verified_agent(agent_address: str) -> Agent:
     return agent
 
 
-async def ping(agent_address: str) -> Agent:
+async def ping(agent_address: str) -> Dict[str, str]:
     client = await redis_session.create_async_session()
     agent_dict = await client.hgetall(agent_address)
     agent = Agent.from_dict(agent_dict)
     agent._last_contacted = int(time.time())
     await client.hmset(agent.agent_address, agent.__dict__)
-    return agent
+    return {"status": "success", "code": "200", "message": "agent successfully pinged."}
 
 
 async def unregister(agent_address: str) -> Dict[str, str]:
@@ -70,4 +70,45 @@ async def unregister(agent_address: str) -> Dict[str, str]:
     agent_dict = await client.hgetall(agent_address)
     await client.srem(agent_dict.get("_status"), agent_dict.get("_agent_address"))
     await client.delete(agent_dict.get("_agent_address"))
-    return {"status": "success", "message": "agent deleted."}
+    return {"status": "success", "code": "200", "message": "agent deleted."}
+
+
+async def set_position(agent_address: str, latitude: float, longitude: float) -> Dict[str, str]:
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.latitude = latitude
+    agent.longitude = longitude
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's position has been updated."}
+
+
+async def set_genus(agent_address: str, genus: str):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.genus = genus
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's genus has been updated."}
+
+
+async def set_classification(agent_address: str, classification: str):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.classification = classification
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's classification has been updated."}
+
+
+async def set_service_keys(agent_address: str, service_keys: Dict[str, Any]):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.service_keys = service_keys
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's service_keys has been updated."}
