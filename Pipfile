@@ -17,6 +17,9 @@ bech32 = "*"
 aredis = {extras = ["hiredis"], version = "*"}
 fastapi-utils = "*"
 redis = "*"
+requests = "*"
+aea-ledger-fetchai = "*"
+aea = {extras = ["all"], version = "*"}
 
 [dev-packages]
 black = "*"

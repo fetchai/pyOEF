@@ -25,6 +25,7 @@ async def register(request: Request):
                                                                        declared_name=vm.declared_name,
                                                                        architecture=vm.architecture)
     response = {
+        "status_code": 200,
         "status": "lobby",
         "unique_url": unique_url,
         "soef_token": soef_token
@@ -43,7 +44,7 @@ async def acknowledge(unique_url: str, request: Request):
 
     agent = await agent_service.create_verified_agent(vm.agent_address)
 
-    return agent.__dict__
+    return {"status_code": 200, **agent.__dict__}
 
 
 @router.get('/{unique_url}/ping')
@@ -68,7 +69,6 @@ async def set_position(unique_url: str, request: Request):
 
     if vm.error:
         return {'error': vm.error}
-
     response = await agent_service.set_position(agent_address=vm.agent_address,
                                                 latitude=vm.latitude,
                                                 longitude=vm.longitude)
