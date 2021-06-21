@@ -1,5 +1,5 @@
 import time
-from typing import Dict
+from typing import Dict, Any
 
 from data import redis_session
 from data.agent import Agent
@@ -102,3 +102,13 @@ async def set_classification(agent_address: str, classification: str):
     agent.classification = classification
     await client.hmset(agent.agent_address, agent.__dict__)
     return {"status": "success", "code": "200", "message": "agent's classification has been updated."}
+
+
+async def set_service_keys(agent_address: str, service_keys: Dict[str, Any]):
+    client = await redis_session.create_async_session()
+    agent_dict = await client.hgetall(agent_address)
+    agent = Agent.from_dict(agent_dict)
+    agent.last_contacted = int(time.time())
+    agent.service_keys = service_keys
+    await client.hmset(agent.agent_address, agent.__dict__)
+    return {"status": "success", "code": "200", "message": "agent's service_keys has been updated."}

@@ -18,7 +18,7 @@
 # ------------------------------------------------------------------------------
 import time
 import uuid
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 
 
 class Agent:
@@ -33,6 +33,7 @@ class Agent:
         self._longitude: Optional[float] = None
         self._genus: Optional[str] = None
         self._classification: Optional[str] = None
+        self._service_keys: Optional[Dict[str, Any]] = None
         self._unique_url: Optional[str] = f"soef_{str(uuid.uuid4())}"
         self._soef_token: Optional[str] = f"token_{str(uuid.uuid4())}"
         self._created_date: int = int(time.time())
@@ -130,6 +131,14 @@ class Agent:
     def classification(self, value) -> None:
         self._classification = value
 
+    @property
+    def service_keys(self) -> Dict[str, Any]:
+        return self._service_keys
+
+    @service_keys.setter
+    def service_keys(self, value) -> None:
+        self._service_keys = value
+
     @classmethod
     def from_dict(cls, agent_dict: Dict[str, str]):
         agent = cls()
@@ -146,6 +155,7 @@ class Agent:
         agent._longitude = agent_dict.get('_longitude')
         agent._genus = agent_dict.get('_genus')
         agent._classification = agent_dict.get('_classification')
+        agent._service_keys = agent_dict.get('_service_keys')
 
         return agent
 

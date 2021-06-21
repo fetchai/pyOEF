@@ -71,7 +71,7 @@ params: params: {
  }
 ```
 
-### Set Classifiation:
+### Set Classification:
 `POST: http://127.0.0.1:8000/{unique_url/set_classification`
 ```buildoutcfg
 params: params: {
