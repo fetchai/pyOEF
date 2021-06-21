@@ -2,7 +2,7 @@ from starlette.requests import Request
 import fastapi
 
 from services import search_service
-from view_models.search.search_around_me_view_model import FindAroundMeViewModel
+from view_models.search.find_around_me_view_model import FindAroundMeViewModel
 
 router = fastapi.APIRouter()
 
