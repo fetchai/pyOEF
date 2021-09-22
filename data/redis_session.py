@@ -1,6 +1,6 @@
 import asyncio
 import sys
-from typing import Optional
+from typing import Optional, List
 
 import aredis
 import redis
@@ -40,8 +40,18 @@ async def create_async_session() -> aredis.client.StrictRedis:
         return __async_client
 
 
-
-
-
-
-
+async def get_table_name_by_classification(classification: str) -> List[str]:
+    global __async_client
+    keys: list = await __async_client.keys()
+    accepted_keys = []
+    for key in keys:
+        if "fetch" not in key:
+            if "*" == classification[0]:
+                if classification[1:] in key:
+                    accepted_keys.append(key)
+            elif "*" == classification[-1]:
+                if classification[:-2] in key:
+                    accepted_keys.append(key)
+            elif "*" not in classification:
+                accepted_keys.append(classification)
+    return accepted_keys

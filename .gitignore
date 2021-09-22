@@ -19,3 +19,4 @@ agents/
 *.egg-info
 build/*
 dist/*
+*/private_key.txt

@@ -10,8 +10,22 @@ router = fastapi.APIRouter()
 
 @router.get('/flush')
 async def flush():
-    await agent_service.redis_session.flush_redis()
+    await redis_session.flush_redis()
     return {"status": "Db flushed."}
+
+
+@router.get('/keys')
+async def keys():
+    client = await redis_session.create_async_session()
+    keys: list = await client.keys()
+    accepted_keys = []
+    key_members  = {}
+    for key in keys:
+        if "fetch" not in key:
+            accepted_keys.append(key)
+            members = await client.smembers(key)
+            key_members.update({key: len(members)})
+    return {**key_members, "keys": accepted_keys}
 
 
 @router.on_event("startup")
@@ -35,4 +49,5 @@ async def clean_up():
 
         else:
             print(timeout_time)
+
 

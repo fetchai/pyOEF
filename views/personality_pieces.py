@@ -20,6 +20,9 @@ async def set_genus(unique_url: str, request: Request):
 
     response = await agent_service.set_genus(agent_address=vm.agent_address,
                                              genus=vm.genus)
+
+    await search_service.create_sets_based_on_genus(agent_address=vm.agent_address,
+                                                    genus=vm.genus)
     return response
 
 

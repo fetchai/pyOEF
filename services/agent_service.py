@@ -27,7 +27,7 @@ async def verify_unique_url(agent_address: str, unique_url: str):
 
 
 async def create_agent_to_lobby(
-    agent_address: str, chain_identifier: str, declared_name: str, architecture: str
+    agent_address: str, chain_identifier: str, declared_name: str, architecture: str = "Framework"
 ):
     agent = Agent()
     agent.agent_address = agent_address
@@ -101,6 +101,7 @@ async def set_classification(agent_address: str, classification: str):
     agent.last_contacted = int(time.time())
     agent.classification = classification
     await client.hmset(agent.agent_address, agent.__dict__)
+    print(await client.hgetall(agent_address))
     return {"status": "success", "code": "200", "message": "agent's classification has been updated."}
 
 

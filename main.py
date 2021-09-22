@@ -2,7 +2,7 @@ import fastapi
 import uvicorn
 
 from data import redis_session
-from views import register, admin, xml_oef, personality_pieces
+from views import register, admin, xml_oef, personality_pieces, search
 
 app = fastapi.FastAPI()
 
@@ -21,6 +21,7 @@ def configure_routes():
     app.include_router(personality_pieces.router)
     app.include_router(register.router)
     app.include_router(admin.router)
+    app.include_router(search.router)
 
 
 def configure():

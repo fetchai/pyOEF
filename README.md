@@ -9,9 +9,16 @@ extract the zip and then  navigate to the folder from terminal and type:
 once the installation finished you can start  the server by typing in  terminal:
 `redis-server`
 
-### Flush redis:
 
+## Admin commands:
+
+###Flash db
 `GET: http://127.0.0.1:8000/flush`
+
+###Get set name and how many members each set has:
+`http://127.0.0.1:8000/keys`
+
+##Register
 
 ### Register agent:
 
@@ -21,7 +28,6 @@ params: {
     "declared_name": "agent_test",
     "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
     "chain_identifier": "FetchAI_v2_Testnet_Stable",
-    "architecture": "custom",
     "api_key": "TwiCIriSl0mLahw17pyqoA"
 }
 ```
@@ -94,3 +100,17 @@ or you can do the get request in one  line:
 
 ` GET: http://127.0.0.1:8000/{unique_url}/unregister?agent_address=fetch1jwrhvszl5a7hh56dg4fu24usljhx8q2set0tu8&soef_token={soef_token}`
 
+## Search:
+
+###Find around me:
+
+You don't have to register in order too search in the pyOEF.
+
+`POST: http://127.0.0.1:8000/find_around_me`
+```buildoutcfg
+{   
+    "radius": 27,
+    "latitude": 52.205278,
+    "longitude": 0.10
+}
+```
