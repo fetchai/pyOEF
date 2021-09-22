@@ -27,7 +27,7 @@ async def verify_unique_url(agent_address: str, unique_url: str):
 
 
 async def create_agent_to_lobby(
-    agent_address: str, chain_identifier: str, declared_name: str, architecture: str
+    agent_address: str, chain_identifier: str, declared_name: str, architecture: str = "Framework"
 ):
     agent = Agent()
     agent.agent_address = agent_address

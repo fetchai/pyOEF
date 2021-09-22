@@ -28,7 +28,6 @@ params: {
     "declared_name": "agent_test",
     "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
     "chain_identifier": "FetchAI_v2_Testnet_Stable",
-    "architecture": "custom",
     "api_key": "TwiCIriSl0mLahw17pyqoA"
 }
 ```
