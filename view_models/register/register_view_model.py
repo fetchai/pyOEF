@@ -65,5 +65,5 @@ class RegisterViewModel(ViewModelBase):
             self.error = "Agent address is not valid."
         elif self.api_key != "TwiCIriSl0mLahw17pyqoA":
             self.error = "Your api key is incorrect"
-        elif await agent_service.get_agent_by_address(self.agent_address):
+        elif await agent_service.get_agent_by_unique_url(self.agent_unique_address):
             self.error = "An agent with this address already exists."

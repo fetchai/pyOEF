@@ -9,7 +9,7 @@
 import xml.etree.ElementTree as ET
 
 
-def generate_error_xml(error) -> bytes:
+def generate_error_xml(error: str) -> bytes:
     root = ET.Element("response")
     code = ET.SubElement(root, "code")
     code.text = "403"
@@ -46,4 +46,31 @@ def registered_success_xml(unique_url, soef_token) -> bytes:
     <reason>Bad Request</reason>
     <detail>lobby to agent transition error</detail>
 </response>"""
+
+
+def command_error_xml(error: str) -> bytes:
+    root = ET.Element('response')
+    code = ET.SubElement(root, 'code')
+    code.text = '400'
+    reason = ET.SubElement(root, 'reason')
+    reason.text = "Bad Request"
+    detail = ET.SubElement(root, 'detail')
+    detail.text = error
+
+    return ET.tostring(root)
+
+
+"""
+'<?xml version="1.0" encoding="UTF-8"?>
+<response>
+    <success>1</success>
+</response>'
+"""
+
+
+def command_success_xml() -> bytes:
+    root = ET.Element('response')
+    success = ET.SubElement(root, 'success')
+    success.text = '1'
+    return ET.tostring(root)
 

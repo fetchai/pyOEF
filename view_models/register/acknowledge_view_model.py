@@ -14,11 +14,13 @@ class AcknowledgeViewModel(ViewModelBase):
         self.soef_token:  Optional[str] = None
         self.unique_url: Optional[str] = unique_url
 
-    async def load(self):
-        request_data = await self.request.json()
-        self.agent_address = request_data.get("agent_address")
-        self.soef_token = request_data.get("soef_token")
-        if not await agent_service.get_agent_by_address(self.agent_address):
+    async def load(self, method: str = 'post'):
+        if method == 'get':
+            request_data = self.request.query_params
+        else:
+            request_data = await self.request.json()
+        self.soef_token = request_data.get("token")
+
+
+        if await agent_service.get_agent_by_token(self.soef_token,  self.unique_url):
             self.error = "You already acknowledge or you need to register first."
-        elif not await agent_service.verify_unique_url(self.agent_address, self.unique_url):
-            self.error = "Your unique address is incorrect. Need to re-register."

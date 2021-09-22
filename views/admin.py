@@ -33,7 +33,7 @@ async def keys():
 async def clean_up():
     client = await redis_session.create_async_session()
     lobby = [address for address in await client.smembers('lobby')]
-    verified_agents = [address for address in await client.smembers('agents')]
+    verified_agents = [address for address in await client.smembers('v_agents')]
     agents = lobby + verified_agents
     for address in agents:
         table = ''

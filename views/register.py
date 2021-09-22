@@ -42,7 +42,7 @@ async def acknowledge(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    agent = await agent_service.create_verified_agent(vm.agent_address)
+    agent = await agent_service.create_verified_agent(unique_url=unique_url)
 
     return {"status_code": 200, **agent.__dict__}
 
@@ -56,7 +56,7 @@ async def ping(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    response = await agent_service.ping(vm.agent_address)
+    response = await agent_service.ping(unique_url=unique_url)
 
     return response
 
@@ -69,7 +69,7 @@ async def set_position(unique_url: str, request: Request):
 
     if vm.error:
         return {'error': vm.error}
-    response = await agent_service.set_position(agent_address=vm.agent_address,
+    response = await agent_service.set_position(unique_url=unique_url,
                                                 latitude=vm.latitude,
                                                 longitude=vm.longitude)
     return response
@@ -84,7 +84,7 @@ async def unregister(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    response = await agent_service.unregister(vm.agent_address)
+    response = await agent_service.unregister(unique_url=unique_url)
     return response
 
 

@@ -38,7 +38,7 @@ params: {
 ```buildoutcfg
 params: {
     "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
-    "soef_token": "You_Receive_This_From_Registration"
+    "token": "You_Receive_This_From_Registration"
  }
 ```
 Both the `unique_url` and the `soef_token` are provided to the user as response from  the register
@@ -49,7 +49,6 @@ request.
 ```buildoutcfg
 params: params: {
     "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
-    "soef_token": "You_Receive_This_From_Registration"
  }
 ```
 or you can do the get request in one  line:
@@ -61,7 +60,6 @@ or you can do the get request in one  line:
 ```buildoutcfg
 params: params: {
     "agent_address": "fetch12v8zq7t4fxnx4w7090xznmsyyyd4def02qfuam",
-    "soef_token": "You_Receive_This_From_Registration",
     "latitidue": 52.205276,
     "longitude": 0.119167
  }

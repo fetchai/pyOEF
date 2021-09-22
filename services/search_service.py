@@ -6,19 +6,19 @@ from data import redis_session
 
 
 async def create_sets_based_on_classification(
-    agent_address: str, classification: str
+    unique_url: str, classification: str
 ) -> None:
     client = await redis_session.create_async_session()
     classification_list = classification.split(".")
     table = ""
     for item in classification_list:
         table += "." + item
-        await client.sadd(table[1:], agent_address)
+        await client.sadd(table[1:], unique_url)
 
 
-async def create_sets_based_on_genus(agent_address: str, genus: str) -> None:
+async def create_sets_based_on_genus(unique_url: str, genus: str) -> None:
     client = await redis_session.create_async_session()
-    await client.sadd(genus, agent_address)
+    await client.sadd(genus, unique_url)
 
 
 def special_match(strg, search=re.compile(r"[^a-z.]").search):

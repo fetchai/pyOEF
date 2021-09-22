@@ -18,7 +18,7 @@ async def set_genus(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    response = await agent_service.set_genus(agent_address=vm.agent_address,
+    response = await agent_service.set_genus(unique_url=unique_url,
                                              genus=vm.genus)
 
     await search_service.create_sets_based_on_genus(agent_address=vm.agent_address,
@@ -35,7 +35,7 @@ async def set_classification(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    response = await agent_service.set_classification(agent_address=vm.agent_address,
+    response = await agent_service.set_classification(unique_url=unique_url,
                                                       classification=vm.classification)
 
     await search_service.create_sets_based_on_classification(agent_address=vm.agent_address,
@@ -52,7 +52,7 @@ async def set_classification(unique_url: str, request: Request):
     if vm.error:
         return {'error': vm.error}
 
-    response = await agent_service.set_service_keys(agent_address=vm.agent_address,
+    response = await agent_service.set_service_keys(unique_url=unique_url,
                                                     service_keys=vm.service_keys)
 
     # TODO:// Store the service keys as tables ?

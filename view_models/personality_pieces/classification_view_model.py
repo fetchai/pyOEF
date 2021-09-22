@@ -10,14 +10,17 @@ class ClassificationViewModel(ViewModelBase):
         super().__init__(request)
 
         self.agent_address: Optional[str] = None
-        self.soef_token: Optional[str] = None
         self.classification: Optional[str] = None
         self.unique_url: Optional[str] = unique_url
 
-    async def load(self):
+    async def load(self, method: str = 'post'):
 
-        request_data = await self.request.json()
-        if not all(key in ["agent_address", "soef_token", "classification"] for key in request_data.keys()):
+        if method == 'get':
+            request_data = self.request.query_params
+        else:
+            request_data = await self.request.json()
+
+        if not all(key in ["agent_address", "classification"] for key in request_data.keys()):
             self.error = (
                 f"You need to provide the following parameters: ['agent_address', 'soef_token', 'classification'] "
             )

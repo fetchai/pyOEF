@@ -30,9 +30,13 @@ class GenusViewModel(ViewModelBase):
         self.genus: Optional[str] = None
         self.unique_url: Optional[str] = unique_url
 
-    async def load(self):
+    async def load(self, method: str = 'post'):
 
-        request_data = await self.request.json()
+        if method == 'get':
+            request_data = self.request.query_params
+        else:
+            request_data = await self.request.json()
+
         if not all(key in ["agent_address", "soef_token", "genus"] for key in request_data.keys()):
             self.error = (
                 f"You need to provide the following parameters: ['agent_address', 'soef_token', 'genus'] "
