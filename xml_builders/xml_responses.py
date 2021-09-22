@@ -39,3 +39,11 @@ def registered_success_xml(unique_url, soef_token) -> bytes:
     page_address.text = unique_url
     return ET.tostring(root)
 
+"""
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+    <code>400</code>
+    <reason>Bad Request</reason>
+    <detail>lobby to agent transition error</detail>
+</response>"""
+
